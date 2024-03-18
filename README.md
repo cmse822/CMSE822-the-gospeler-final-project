@@ -15,4 +15,22 @@ $$\hat{\beta}^{\text{lasso}} = \arg\min_{\beta} \{ \frac{1}{2}\|y - X^T\beta\|^2
 Given a feature matrix $X^T \in \mathbb{R}^{n\times p}$, where $n = 1500$ examples and $p = 5000$ features.  
 The data are generated such that $X_{i, j} \sim N(0, 1)$, with its rows normalized to have unit $l_2$ norm; A *true* value $\beta^{true} \in \mathbb{R}^p$, with 100 nonzero entries each sampled from an $N(0, 1)$ distribution; and the $y$ label is computed as $y =X\beta^{true} + \epsilon$, where $\epsilon \sim N(0, 10^{-3})$.  
 
-**The goal of this project is parallelization strategies in the ADMM algorithm to solve a single lasso problem (i.e., $\lambda = 1$ value) and regularization path (i.e., $\lambda = 100$ values).**
+**The goal of this project is to utilize parallelize the ADMM algorithm to solve a single lasso problem (i.e., $\lambda = 1$ value) and regularization path (i.e., $\lambda = 100$ values).**
+
+#### Parallelization Strategies:
+- Employ domain decomposition to split the LASSO problem into subproblems that can be solved independently in parallel.
+- Utilizing a task-based approach where different stages of the ADMM algorithm (like variable updates) are treated as separate tasks.
+
+#### Load Balancing and Memory Usage
+- Implement dynamic load balancing to ensure even distribution of computational load as the number of tasks increases.
+- Adaptively allocate resources based on the workload of each task (considering the iterative methods of ADMM).
+- Analyze how memory usage scales with the number of tasks
+- Optimize data structures and memory access patterns to minimize memory overhead and maximize efficiency, especially in a distributed computing environment
+
+#### Verification Test
+- This task have been performed using Python programming and will be used to verify the correctness of the parallel ADMM implementation.
+- Based on this test suite, ensure that the LASSO solution remains consistent irrespective of the number of parallel tasks or the parallelization strategy used
+
+#### Scaling Studies
+- Measure thread-to-thread speedup and analyze how the solution scales with an increasing number of nodes and processors.
+- Conduct weak and strong scaling studies to evaluate performance.
