@@ -10,7 +10,7 @@ First, give a brief description of your project topic idea and detail how you wi
 
 The least absolute shrinkage and selection operator (lasso) method is a popular method in statistics and machine learning for regression analysis with regularization. However, the lasso problem is not an easy solve due to its $L_1$ lasso penalty, unlike the linear regression or ridge regression algortithm. But, algorithms such as the ADMM, have been developed to estimte the lasso estimator. 
 
-$\hat{\beta}^{\text{lasso}}$ $= \arg\min_{\beta}\left\{\right\}$
+$\hat{\beta}^{\text{lasso}}$ $= \arg\min_{\beta} \left\{\right\}$
 
 $$\hat{\beta}^{\text{lasso}} = \arg\min_{\beta} \left\{ \frac{1}{2}\|y - X^T\beta\|^2 + \lambda\|\beta\|_1 \right\}.$$
 
