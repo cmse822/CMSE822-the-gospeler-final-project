@@ -42,8 +42,8 @@ int main(int argc, char* argv[]) {
     double rel_tol = 1e-2;
     double rho = 1.0;  // preselected and constant throughout iteration
     int max_iter = 25;  // pre-computation shows ADMM convergs at 14/25 iterations
-    MatrixXd A = X.transpose(); // Define your data matrix A
-    VectorXd b = y; // Define your outcome vector b
+    MatrixXd A = X.transpose(); // transform X to the right dimension
+    VectorXd b = y; // copy y into the vector b
 
     int m = X.rows();
     int n = A.cols();
