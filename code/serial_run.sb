@@ -1,0 +1,23 @@
+#!/bin/bash --login
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --time=10:00:00
+#SBATCH --mem=8gb
+#SBATCH --constraint="intel18"
+
+# output information about how this job is running using bash commands
+echo "This job is running on $HOSTNAME on `date`"
+
+# load the Eigen library
+module load Eigen/3.3.4
+
+# compile the program
+g++ -o program admm_lasso_serial.cpp
+./program 1500 5000 100 "serial_run.csv"
+
+# move the result
+mv serial_run.csv ../data/serial_run.csv
+
+# delete the execution file
+rm program
+

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#SBATCH --tasks-per-node=5
+#SBATCH --nodes=5
+#SBATCH --time=08:30:00
+#SBATCH --mem-per-cpu=5GB
+#SBATCH --constraint=amr
+
+
+# Show job information
+scontrol show job "$SLURM_JOB_ID"
+
+
+# load the Eigen library
+module load Eigen/3.3.4
+
+# Compile Program
+mpicxx -fopenmp -o admm_lasso_hybrid admm_parallel_hybrid.cpp
+
+# Variate the node sizes for each run
+NODE_SIZE=(5 10 15 20 25)
+
+
+export OMP_NUM_THREADS=4
+
+# Execute multiple runs
+for nSIZE in "${NODE_SIZE[@]}"; do
+    mpiexec -np "$nSIZE" ./admm_lasso_hybrid 1500 5000 100 "hybrid_run_10n_$nSIZE.csv"
+done
+
+rm admm_lasso_hybrid

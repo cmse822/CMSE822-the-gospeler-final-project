@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#SBATCH --tasks-per-node=3
+#SBATCH --nodes=10
+#SBATCH --time=5:00:00
+#SBATCH --mem=8gb
+#SBATCH --constraint=amr
+
+
+# load the Eigen library
+module load Eigen/3.3.4
+
+# Compile Program
+mpicxx -fopenmp -o admm_lasso_mpi_n10 admm_parallel_mpi.cpp
+
+# Variate the node sizes for each run
+NODE_SIZE=(5 10 15 20 25 30)
+
+# Execute multiple runs
+for nSIZE in "${NODE_SIZE[@]}"; do
+    mpiexec -np "$nSIZE" ./admm_lasso_mpi_n10 1500 5000 100 "mpi_run_10n_$nSIZE.csv"
+done
+
+rm admm_lasso_mpi_n10
